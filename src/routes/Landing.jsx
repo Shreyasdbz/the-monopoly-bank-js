@@ -51,7 +51,8 @@ const Landing = () => {
                 <h1>The Monopoly Bank</h1>
             </div>
             <div className='amount-form'>
-                <h4>Enter a starting amount: $ </h4>
+                <h4>Enter a starting amount:</h4>
+                <h4>$</h4>
                 <input
                     type='text'
                     className='amount-input'
