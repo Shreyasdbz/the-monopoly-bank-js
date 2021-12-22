@@ -7,6 +7,7 @@ import { initial_player_data } from './initalData';
 // CONTEXTS FOR INTERNAL SETUP  ------------------------
 
 const PlayerContext = createContext();
+const PlayerUpateContext = createContext();
 const PlayerAddContext = createContext();
 const PlayerRemoveContext = createContext();
 const PlayerTransactionContext = createContext();
@@ -16,6 +17,9 @@ const PlayerInitiatecontext = createContext();
 
 export function usePlayers() {
     return useContext(PlayerContext);
+}
+export function usePlayersUpdate() {
+    return useContext(PlayerUpateContext);
 }
 export function usePlayerAddContext() {
     return useContext(PlayerAddContext);
@@ -31,16 +35,13 @@ export function usePlayerInitiateContext() {
 }
 
 // PRIMARY PROVIDER COMPONENT ------------------------
-// Player list / obj format:
-// [
-// {
-// name: str
-// balance: 0
-// }, {...}
-// ]
+
 export function PlayerProvider({ children }) {
     const [playerList, set_playerList] = useState(initial_player_data);
 
+    function update_players(player_list_input) {
+        set_playerList(player_list_input);
+    }
     function add_new_player(player_name) {
         //
     }
@@ -62,7 +63,9 @@ export function PlayerProvider({ children }) {
                         <PlayerInitiatecontext.Provider
                             value={initiate_player_list}
                         >
-                            {children}
+                            <PlayerUpateContext.Provider value={update_players}>
+                                {children}
+                            </PlayerUpateContext.Provider>
                         </PlayerInitiatecontext.Provider>
                     </PlayerTransactionContext.Provider>
                 </PlayerRemoveContext.Provider>

@@ -1,4 +1,18 @@
 /** @format */
+$color-grey-bg: #e4e4e4;
+$color-grey-bg-light: #d8d8d850;
+$color-grey-text: #6b6b6b;
+$color-primary: #20c3d8;
+$color-primary-light: #20c3d850;
+$color-secondary: #ffe574;
+$color-secondary-light: #ffe57450;
+$color-danger: #ea1c4f;
+$color-danger-light: #ea1c4f50;
+$color-remove: #f4511e;
+$color-remove-light: #f4511e50;
+$color-add: #2e7d32;
+$color-add-light: #2e7d3250;
+
 * {
     margin: 0;
     padding: 0;
@@ -37,13 +51,13 @@ h4 {
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #20c3d8;
+        background-color: $color-primary;
         margin: 1rem 0rem;
         width: 90vw;
         height: 20vh;
         border-radius: 1rem;
         color: white;
-        box-shadow: 0px 0px 15px 5px #20c3d850;
+        box-shadow: 0px 0px 15px 5px $color-primary-light;
     }
 
     .amount-form {
@@ -60,7 +74,8 @@ h4 {
             font-size: 1.25rem;
             outline: none;
             border-radius: 1rem;
-            background-color: rgba(0, 0, 0, 0.075);
+            background-color: $color-grey-bg;
+            box-shadow: 0px 0px 15px 5px $color-grey-bg-light;
             border: none;
             padding: 0.5rem 1rem;
         }
@@ -81,20 +96,16 @@ h4 {
             margin: 1rem 0rem;
             padding: 1rem 2rem;
             border-radius: 1rem;
-            border: 2px solid rgba(0, 0, 0, 0.075);
+            border: 2px solid $color-grey-bg-light;
 
             .player-name-box {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: 1rem;
-                // padding: 1rem 2rem;
-                // border: 2px solid rgba(0, 0, 0, 0.075);
-                // border-radius: 1rem;
 
                 .player-name {
                     border: none;
-                    // border: 2px solid rgba(0, 0, 0, 0.125);
                     outline: none;
                     padding: 0.5rem 1rem;
                     font-size: 1.25rem;
@@ -131,14 +142,14 @@ h4 {
             outline: none;
             border-radius: 1rem;
             font-weight: 500;
-            background-color: #ffe574;
-            box-shadow: 0px, 2px, 15px, 5px, #ffe57450;
+            background-color: $color-secondary;
+            box-shadow: 0px, 2px, 15px, 5px, $color-secondary-light;
             cursor: pointer;
         }
         .add-player-button:hover {
             position: relative;
             transform: scale(1.025);
-            box-shadow: 0px, 2px, 15px, 5px, #ffe574;
+            box-shadow: 0px, 2px, 15px, 5px, $color-secondary;
         }
     }
 
@@ -149,8 +160,8 @@ h4 {
         outline: none;
         border-radius: 1rem;
         font-weight: 500;
-        background-color: #20c3d8;
-        box-shadow: 0px, 2px, 15px, 5px, #20c3d850;
+        background-color: $color-primary;
+        box-shadow: 0px, 2px, 15px, 5px, $color-primary-light;
         cursor: pointer;
         color: white;
         // margin: 2rem 0rem;
@@ -159,19 +170,18 @@ h4 {
     .start-game-button:hover {
         position: relative;
         transform: scale(1.025);
-        box-shadow: 0px, 2px, 15px, 5px, #20c3d8;
     }
 
     .footer {
         position: fixed;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.075);
+        background-color: $color-grey-bg;
         padding: 0.25rem 5rem;
         border-top-left-radius: 1rem;
         border-top-right-radius: 1rem;
         font-size: 1rem;
         font-weight: 600;
-        color: rgba(0, 0, 0, 0.5);
+        color: $color-grey-text;
         cursor: pointer;
         text-decoration: none;
     }
@@ -180,6 +190,112 @@ h4 {
 // ######################## Home PAGE ########################
 
 .home-container {
+    .transaction-popUp-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .box {
+            padding: 1.5rem 2rem;
+            background-color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+
+            .header {
+                font-size: 1.25rem;
+                word-wrap: break-word;
+
+                .action {
+                    font-size: 1.25rem;
+                    padding: 0rem 0.5rem;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                }
+                .add-action {
+                    color: $color-add;
+                }
+                .remove-action {
+                    color: $color-remove;
+                }
+                .name {
+                    border-radius: 1rem;
+                    padding: 0rem 0.5rem;
+                    font-weight: 800;
+                    color: white;
+                }
+            }
+
+            .input-box {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.25rem;
+
+                .dollar-sign {
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    color: $color-grey-text;
+                }
+                .amount-input {
+                    border: none;
+                    outline: none;
+                    font-size: 1.25rem;
+                    padding: 0.5rem 1rem;
+                    background-color: $color-grey-bg;
+                    border-radius: 1rem;
+                    font-weight: 600;
+                    margin: 1rem 0rem;
+                }
+            }
+
+            .action-btns {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+
+                .btn {
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                    border-radius: 1rem;
+                    padding: 0.5rem 1rem;
+                    cursor: pointer;
+                    border: none;
+                    outline: none;
+                    color: white;
+                }
+                .btn:hover {
+                    transform: scale(1.075);
+                }
+                .arithmetic-btn {
+                    text-transform: uppercase;
+                }
+                .add-btn {
+                    background-color: $color-add;
+                    box-shadow: 0px 0px 15px 0px $color-add-light;
+                }
+                .remove-btn {
+                    background-color: $color-remove;
+                    box-shadow: 0px 0px 15px 0px $color-remove-light;
+                }
+                .cancel-btn {
+                    background-color: $color-danger;
+                    box-shadow: 0px 0px 15px 0px $color-danger-light;
+                }
+            }
+        }
+    }
+
     .reset-confirmation-container {
         position: absolute;
         width: 100%;
@@ -213,20 +329,23 @@ h4 {
                     border: none;
                     outline: none;
                     font-size: 1.125rem;
-                    padding: 0.25rem 1rem;
+                    padding: 0.5rem 1rem;
                     color: white;
                     cursor: pointer;
+                    font-weight: 600;
                 }
                 .btn:hover {
                     transform: scale(1.125);
                 }
 
                 .yes {
-                    background-color: crimson;
+                    background-color: $color-danger;
+                    box-shadow: 0px 0px 15px 0px $color-danger-light;
                 }
 
                 .no {
-                    background-color: deepskyblue;
+                    background-color: $color-primary;
+                    box-shadow: 0px 0px 15px 0px $color-primary-light;
                 }
             }
         }
@@ -254,13 +373,13 @@ h4 {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #20c3d8;
+            background-color: $color-primary;
             margin: 1rem 0rem;
             width: 90vw;
             height: 10vh;
             border-radius: 1rem;
             color: white;
-            box-shadow: 0px 0px 15px 5px #20c3d850;
+            box-shadow: 0px 0px 15px 5px $color-primary-light;
         }
 
         .player-list-box {
@@ -292,7 +411,7 @@ h4 {
                     outline: none;
                     border: none;
                     border-radius: 1rem;
-                    gap: 4rem;
+                    gap: 2rem;
                     // justify-content: center;
 
                     .name {
@@ -309,9 +428,9 @@ h4 {
                         justify-content: center;
                         flex-direction: row;
                         font-size: 1.5rem;
-                        padding: 1rem 4rem;
+                        padding: 1rem 2rem;
                         font-weight: 600;
-                        background-color: rgba(0, 0, 0, 0.075);
+                        background-color: $color-grey-bg;
                         border-radius: 1rem;
                         white-space: nowrap;
                     }
@@ -361,22 +480,24 @@ h4 {
                 outline: none;
                 border-radius: 1rem;
                 cursor: pointer;
+                font-weight: 600;
             }
             .nav-btn:hover {
                 transform: scale(1.075);
             }
 
             .transactions-btn {
-                background-color: #ffe574;
+                background-color: $color-secondary;
                 padding: 1rem 5rem;
                 font-size: 1.25rem;
-                box-shadow: 0px 2px 10px 2px #ffe57450;
+                box-shadow: 0px 2px 10px 2px $color-secondary-light;
+                // display: none;
             }
             .reset-btn {
-                background-color: crimson;
-                padding: 0.5rem 2rem;
+                background-color: $color-danger;
+                padding: 0.75rem 2rem;
                 font-size: 1rem;
-                box-shadow: 0px 2px 10px 2px #dc143c50;
+                box-shadow: 0px 2px 10px 2px $color-danger-light;
                 color: white;
             }
         }

@@ -1,14 +1,22 @@
 /** @format */
 // import { Link } from 'react-router-dom';
 import { IoAddCircleOutline, IoRemoveCircleOutline } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 import { useState } from 'react/cjs/react.development';
-import { usePlayers } from '../data/PlayerProvider';
+import { usePlayers, usePlayersUpdate } from '../data/PlayerProvider';
 
 const Home = () => {
     const playerList = usePlayers();
+    const updatePlayerList = usePlayersUpdate();
     const [resetConfirmationBoxActive, set_resetConfirmationBoxActive] =
         useState(false);
+    const [transactionPopupActive, set_transactionPopupActive] =
+        useState(false);
     const [overlayActive, set_overlayActive] = useState(false);
+    const [currentAction, set_currentAction] = useState(null);
+    const [currentPlayer, set_currentPlayer] = useState(null);
+    const [currentTransactionAmount, set_currentTransactionAmount] =
+        useState(null);
 
     function handleResetConfirmation(action) {
         if (action === 'SHOW') {
@@ -23,8 +31,106 @@ const Home = () => {
         }
     }
 
+    function handleTransactionPopUp(action, player) {
+        if (action === 'CANCEL') {
+            set_overlayActive(false);
+            set_transactionPopupActive(false);
+            set_currentPlayer(null);
+            set_currentAction(null);
+            set_currentTransactionAmount(null);
+        } else {
+            set_overlayActive(true);
+            set_transactionPopupActive(true);
+            set_currentPlayer(player);
+            set_currentAction(action);
+        }
+    }
+
+    function handleTransaction() {
+        // Find player from list
+        for (let player of playerList) {
+            if (player.id === currentPlayer.id) {
+                // Update player's balance
+                var amount_to_transact = parseFloat(currentTransactionAmount);
+                if (currentAction.toUpperCase() === 'ADD') {
+                    player.balance += amount_to_transact;
+                } else if (currentAction.toUpperCase() === 'REMOVE') {
+                    player.balance -= amount_to_transact;
+                }
+            }
+        }
+        // Send updated list to context
+        updatePlayerList(playerList);
+        // Clear out values
+        set_overlayActive(false);
+        set_transactionPopupActive(false);
+        set_currentPlayer(null);
+        set_currentAction(null);
+        set_currentTransactionAmount(null);
+    }
+
     return (
         <div className='home-container'>
+            {transactionPopupActive ? (
+                <div className='transaction-popUp-container'>
+                    <div className='box'>
+                        <div className='header'>
+                            <span className='text'>Enter amount to</span>
+                            <span
+                                className={`action ${
+                                    currentAction === 'ADD'
+                                        ? 'add-action'
+                                        : 'remove-action'
+                                }`}
+                            >
+                                {currentAction.toLowerCase()}
+                            </span>
+                            <span className='text'>for</span>
+                            <span
+                                className='name'
+                                style={{
+                                    color: `${currentPlayer.color}`,
+                                }}
+                            >
+                                {currentPlayer.name}
+                            </span>
+                        </div>
+                        <div className='input-box'>
+                            <span className='dollar-sign'>$</span>
+                            <input
+                                type='text'
+                                className='amount-input'
+                                value={currentTransactionAmount}
+                                onChange={(e) =>
+                                    set_currentTransactionAmount(e.target.value)
+                                }
+                            />
+                        </div>
+                        <div className='action-btns'>
+                            <button
+                                className={`btn ${
+                                    currentAction === 'ADD'
+                                        ? 'add-btn'
+                                        : 'remove-btn'
+                                }`}
+                                onClick={handleTransaction}
+                            >
+                                {currentAction}
+                            </button>
+                            <button
+                                className='btn cancel-btn'
+                                onClick={() => {
+                                    handleTransactionPopUp('CANCEL');
+                                }}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <></>
+            )}
             {resetConfirmationBoxActive ? (
                 <div className='reset-confirmation-container'>
                     <div className='box'>
@@ -34,14 +140,16 @@ const Home = () => {
                             information and return home?
                         </div>
                         <div className='action-btns'>
-                            <button
-                                className='btn yes'
-                                onClick={() => {
-                                    handleResetConfirmation('YES');
-                                }}
-                            >
-                                Yes
-                            </button>
+                            <Link to='/'>
+                                <button
+                                    className='btn yes'
+                                    onClick={() => {
+                                        handleResetConfirmation('YES');
+                                    }}
+                                >
+                                    Yes
+                                </button>
+                            </Link>
                             <button
                                 className='btn no'
                                 onClick={() => {
@@ -86,6 +194,12 @@ const Home = () => {
                                                 backgroundColor: `${player.color}`,
                                                 boxShadow: `0px 2px 10px 2px ${player.color}30`,
                                             }}
+                                            onClick={() => {
+                                                handleTransactionPopUp(
+                                                    'ADD',
+                                                    player
+                                                );
+                                            }}
                                         >
                                             <IoAddCircleOutline className='btn-icon' />
                                         </button>
@@ -94,6 +208,12 @@ const Home = () => {
                                             style={{
                                                 backgroundColor: `${player.color}`,
                                                 boxShadow: `0px 2px 10px 2px ${player.color}30`,
+                                            }}
+                                            onClick={() => {
+                                                handleTransactionPopUp(
+                                                    'REMOVE',
+                                                    player
+                                                );
                                             }}
                                         >
                                             <IoRemoveCircleOutline className='btn-icon' />

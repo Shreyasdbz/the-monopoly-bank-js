@@ -6,10 +6,9 @@ import { BiTrash } from 'react-icons/bi';
 
 import { initial_player_data } from '../data/initalData';
 import { getRandomColor } from '../data/colorData';
-import { usePlayers, usePlayerInitiateContext } from '../data/PlayerProvider';
+import { usePlayerInitiateContext } from '../data/PlayerProvider';
 
 const Landing = () => {
-    const provider_player_list = usePlayers();
     const initiatePlayerList = usePlayerInitiateContext();
     const [playerList, set_playerList] = useState(initial_player_data);
     const [startingAmount, set_startingAmount] = useState(1500);
@@ -30,6 +29,15 @@ const Landing = () => {
             playerList.filter((player) => player.id !== id_to_remove)
         );
     }
+    function changePlayerName(id, name) {
+        var tempPlayerList = playerList;
+        for (let player of tempPlayerList) {
+            if (player.id === id) {
+                player.name = name;
+            }
+        }
+        set_playerList(tempPlayerList);
+    }
     function setGamestart() {
         // Update Balances
         playerList.map((player) => {
@@ -42,8 +50,8 @@ const Landing = () => {
     }
 
     useEffect(() => {
-        set_playerList(provider_player_list);
-    }, [provider_player_list]);
+        set_playerList(initial_player_data);
+    }, []);
 
     return (
         <div className='landing'>
@@ -71,6 +79,12 @@ const Landing = () => {
                                     type='text'
                                     className='player-name'
                                     defaultValue={player.name}
+                                    onChange={(e) => {
+                                        changePlayerName(
+                                            player.id,
+                                            e.target.value
+                                        );
+                                    }}
                                     style={{
                                         backgroundColor: `${player.color}`,
                                         boxShadow: `0px 2px 15px 5px ${player.color}25`,

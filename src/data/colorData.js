@@ -4,7 +4,7 @@ export const color_palette = [
     {
         id: '001',
         name: 'navy-blue',
-        color: '#122373',
+        color: '#002848',
     },
     {
         id: '002',
@@ -13,8 +13,8 @@ export const color_palette = [
     },
     {
         id: '003',
-        name: 'faded-purple',
-        color: '#43406a',
+        name: 'flat-purple',
+        color: '#310972',
     },
     {
         id: '004',
@@ -29,7 +29,7 @@ export const color_palette = [
     {
         id: '006',
         name: 'orange',
-        color: '#ea864e',
+        color: '#e86c39',
     },
     {
         id: '007',
@@ -40,6 +40,21 @@ export const color_palette = [
         id: '008',
         name: 'smooth-pink',
         color: '#ef7191',
+    },
+    {
+        id: '009',
+        name: 'flat-pink',
+        color: '#e3179d',
+    },
+    {
+        id: '009',
+        name: 'flat-brown',
+        color: '#7e4a48',
+    },
+    {
+        id: '010',
+        name: 'red',
+        color: '#de0800',
     },
 ];
 
