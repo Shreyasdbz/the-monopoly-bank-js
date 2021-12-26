@@ -74,7 +74,6 @@ const Landing = () => {
                     {playerList.map((player) => {
                         return (
                             <div className='player-name-box' key={player.id}>
-                                {/* TODO: Update player name in player list on change ()  */}
                                 <input
                                     type='text'
                                     className='player-name'

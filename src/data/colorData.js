@@ -27,11 +27,6 @@ export const color_palette = [
         color: '#2d5f62',
     },
     {
-        id: '006',
-        name: 'orange',
-        color: '#e86c39',
-    },
-    {
         id: '007',
         name: 'green',
         color: '#127e58',
@@ -45,11 +40,6 @@ export const color_palette = [
         id: '009',
         name: 'flat-pink',
         color: '#e3179d',
-    },
-    {
-        id: '009',
-        name: 'flat-brown',
-        color: '#7e4a48',
     },
     {
         id: '010',

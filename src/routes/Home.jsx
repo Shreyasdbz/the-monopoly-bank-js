@@ -1,9 +1,10 @@
 /** @format */
 // import { Link } from 'react-router-dom';
 import { IoAddCircleOutline, IoRemoveCircleOutline } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
-import { useState } from 'react/cjs/react.development';
 import { usePlayers, usePlayersUpdate } from '../data/PlayerProvider';
+import { useState } from 'react/cjs/react.development';
+import PerformTransactionPopUp from '../components/PerformTransactionPopUp';
+import ResetDataPopUp from '../components/ResetDataPopUp';
 
 const Home = () => {
     const playerList = usePlayers();
@@ -72,95 +73,21 @@ const Home = () => {
     return (
         <div className='home-container'>
             {transactionPopupActive ? (
-                <div className='transaction-popUp-container'>
-                    <div className='box'>
-                        <div className='header'>
-                            <span className='text'>Enter amount to</span>
-                            <span
-                                className={`action ${
-                                    currentAction === 'ADD'
-                                        ? 'add-action'
-                                        : 'remove-action'
-                                }`}
-                            >
-                                {currentAction.toLowerCase()}
-                            </span>
-                            <span className='text'>for</span>
-                            <span
-                                className='name'
-                                style={{
-                                    color: `${currentPlayer.color}`,
-                                }}
-                            >
-                                {currentPlayer.name}
-                            </span>
-                        </div>
-                        <div className='input-box'>
-                            <span className='dollar-sign'>$</span>
-                            <input
-                                type='text'
-                                className='amount-input'
-                                value={currentTransactionAmount}
-                                onChange={(e) =>
-                                    set_currentTransactionAmount(e.target.value)
-                                }
-                            />
-                        </div>
-                        <div className='action-btns'>
-                            <button
-                                className={`btn ${
-                                    currentAction === 'ADD'
-                                        ? 'add-btn'
-                                        : 'remove-btn'
-                                }`}
-                                onClick={handleTransaction}
-                            >
-                                {currentAction}
-                            </button>
-                            <button
-                                className='btn cancel-btn'
-                                onClick={() => {
-                                    handleTransactionPopUp('CANCEL');
-                                }}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <PerformTransactionPopUp
+                    currentAction={currentAction}
+                    currentPlayer={currentPlayer}
+                    currentTransactionAmount={currentTransactionAmount}
+                    set_currentTransactionAmount={set_currentTransactionAmount}
+                    handleTransaction={handleTransaction}
+                    handleTransactionPopUp={handleTransactionPopUp}
+                />
             ) : (
                 <></>
             )}
             {resetConfirmationBoxActive ? (
-                <div className='reset-confirmation-container'>
-                    <div className='box'>
-                        <h4 className='title'>Reset All Data</h4>
-                        <div className='caption'>
-                            Are you sure you want to reset all player
-                            information and return home?
-                        </div>
-                        <div className='action-btns'>
-                            <Link to='/'>
-                                <button
-                                    className='btn yes'
-                                    onClick={() => {
-                                        handleResetConfirmation('YES');
-                                    }}
-                                >
-                                    Yes
-                                </button>
-                            </Link>
-                            <button
-                                className='btn no'
-                                onClick={() => {
-                                    handleResetConfirmation('NO');
-                                }}
-                            >
-                                No
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <ResetDataPopUp
+                    handleResetConfirmation={handleResetConfirmation}
+                />
             ) : (
                 <></>
             )}
